@@ -11,7 +11,10 @@ from . import base
 
 
 class BaseSemVerField(models.CharField):
-    __metaclass__ = models.SubfieldBase
+    # __metaclass__ = models.SubfieldBase
+
+    def from_db_value(self, value, expression, connection, context):
+        return self.get_prep_value(value)
 
     def __init__(self, *args, **kwargs):
         kwargs.setdefault('max_length', 200)
